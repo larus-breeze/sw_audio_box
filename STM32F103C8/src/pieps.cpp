@@ -160,7 +160,7 @@ void pieps( void *)
 
   for( Synchronous_Timer t( 10); true; t.sync())
     {
-#if 1 // vibrato
+#if 0 // vibrato
       set_frequency( frequency);
       set_volume( amplitude);
       sound_on( vibrato_count & 4);

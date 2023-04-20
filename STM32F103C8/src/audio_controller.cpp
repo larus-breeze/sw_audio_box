@@ -244,7 +244,7 @@ void Audio_Controller (void *)
 
       if ((Audio_Volume == 0) || (Frequency == 0))
 	{
-//	  set_frequency (0);
+	  set_frequency (1000);
 	  set_volume (0);
 	  sound_on (false);
 	}
