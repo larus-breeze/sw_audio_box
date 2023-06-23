@@ -81,6 +81,9 @@ void sound_on( bool activated)
 //!< set frequency using timer TIM2 hardware
 void set_frequency( uint16_t frequency_Hz)
 {
+  if( frequency_Hz == 0)
+    return;
+
   unsigned count = SIGNAL_PERIOD_BASE_VALUE / frequency_Hz;
   // count = 12000 -> 1kHz
   TIM2->ARR = count;

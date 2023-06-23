@@ -32,7 +32,9 @@
 #if RUN_AUDIO_CONTROLLER
 
 #define MINIMUM_FREQUENCY 300
-#define FREQUENCY_SHIFT 12
+#define FREQUENCY_SHIFT 10
+#define CHOPPER_PERIOD 20000
+#define CHOPPER_SHIFT  500
 
 class chirp_controller_t
 {
@@ -197,12 +199,14 @@ void Audio_Controller (void *)
 	    {
 	      Frequency = MINIMUM_FREQUENCY + NormedFrequency / FREQUENCY_SHIFT;
 
+	      unsigned chopper = CHOPPER_PERIOD / (Frequency - CHOPPER_SHIFT);
+
 	      if (Interval > 10)
 		{
 		  ++interval_counter;
-		  if (interval_counter > 20)
+		  if (interval_counter > chopper)
 		    interval_counter = 0;
-		  if (interval_counter > 10)
+		  if (interval_counter > chopper / 2)
 		    Frequency = 0;
 		}
 	    }
@@ -235,24 +239,21 @@ void Audio_Controller (void *)
 		}
 
 	    }
+
+	  if( Frequency > 0)
+	    {
+		set_frequency (Frequency);
+		set_volume (Audio_Volume * 65536l / 100l);
+		sound_on (true);
+	    }
+	  else
+		sound_on (false);
 	} // volume > 0
       else
 	{
 	    Frequency = 0;
 	    Audio_Volume = 0;
-	}
-
-      if ((Audio_Volume == 0) || (Frequency == 0))
-	{
-	  set_frequency (1000);
-	  set_volume (0);
-	  sound_on (false);
-	}
-      else
-	{
-	  set_frequency (Frequency);
-	  set_volume (Audio_Volume * 65536l / 100l);
-	  sound_on (true);
+	    sound_on (false);
 	}
     } // task loop
 } // task
