@@ -129,6 +129,8 @@ typedef struct
 
 } SignalQItem_t;
 
+ROM unsigned melody[] = {500, 630, 749, 1000, 1000};
+
 void Audio_Controller (void *)
 {
   uint8_t climbmode = 0;
@@ -157,6 +159,20 @@ void Audio_Controller (void *)
 
   init_pieps ();
   sound_on (false);
+
+  delay(1000);
+  sound_on ( true);
+  set_volume (8192 * 3);
+
+  for( unsigned i=0; i < sizeof(melody)/sizeof(unsigned); ++i)
+    {
+	Frequency = melody[i];
+	set_frequency (Frequency);
+	delay(333);
+    }
+  sound_on ( false);
+
+  delay(2000);
 
   int CAN_RX_active = 0;
 
