@@ -189,9 +189,7 @@ void Audio_Controller (void *)
 	      if (NormedFrequency < 0)
 		NormedFrequency = 0;
 	      Interval = p.data_h[1];
-	      Audio_Volume = p.data_b[4] * 5; // just use range 0..20
-	      if( Audio_Volume > 100)
-		Audio_Volume = 100;
+	      Audio_Volume = p.data_b[4];
 	      climbmode = p.data_b[6];
 	      speed_error = -(int8_t) (p.data_sb[7]);
 	    }
@@ -259,7 +257,7 @@ void Audio_Controller (void *)
 	  if( Frequency > 0)
 	    {
 		set_frequency (Frequency);
-		set_volume (Audio_Volume * 65536l / 100l);
+		set_volume (Audio_Volume);
 		sound_on (true);
 	    }
 	  else

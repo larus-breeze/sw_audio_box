@@ -46,16 +46,32 @@ TIM_HandleTypeDef htim2;
 uint16_t sound_period_length = 1200;
 uint8_t amplitude = 0;
 
-ROM uint8_t LOUDNESS_BITS[]={
-    0x00, 0x7f, 0xbf, 0xdf, 0xef, 0xf7, 0xfb, 0xfd
+ROM uint8_t LOUDNESS_BITS[]=
+{
+    0,
+    0b00111110,
+    0b01111110,
+    0b10011110,
+    0b10111110,
+    0b11001110,
+    0b11011110,
+    0b11100110,
+    0b11101110,
+    0b11110010,
+    0b11110110,
+    0b11111000,
+    0b11111010,
+    0b11111100,
+    0b11111110
 };
-
 //!< set volume using log multiplying DAC
 void set_volume( uint16_t volume)
 {
   uint32_t odr = GPIOA->ODR; // read and conserve bits > bit 7
   odr &= ~0xff;
-  odr |= LOUDNESS_BITS[volume / 8192];
+  if( volume > 14)
+    volume = 14;
+  odr |= LOUDNESS_BITS[volume];
   GPIOA->ODR = odr;
 }
 
