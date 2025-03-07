@@ -13,7 +13,7 @@ extern uint16_t unique_id_hash;
 
 #define USE_FREE_RTOS		1
 
-#if 0 // for Nucleo board
+#if 1 // for Nucleo board
 #define LED_PORT 		GPIOA
 #define LED_PIN 		GPIO_PIN_5
 #define LED_PORT_CLOCK_ENABLE() __HAL_RCC_GPIOA_CLK_ENABLE()
@@ -28,7 +28,7 @@ extern uint16_t unique_id_hash;
 #endif
 
 #define RUN_AUDIO_TEST		0
-#define RUN_AUDIO_CONTROLLER	1
+#define RUN_AUDIO_CONTROLLER	0
 #define ACTIVATE_OAT_SENSOR	0
 #define RUN_BUTTON		0
 

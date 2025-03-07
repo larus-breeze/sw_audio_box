@@ -33,33 +33,12 @@ extern bool blink_slowly;
 void blink_code( void *)
 {
 	  init_LED();
-	  CAN_packet dummy;
 	  while (1)
 	  {
 		  HAL_GPIO_WritePin( LED_PORT, LED_PIN, GPIO_PIN_RESET);
-#if CAN_RUN_TESTCODE
-		  CAN_RX_queue.receive( dummy);
-		  if( dummy.id == 100)
-		    {
-		      __disable_irq();
-		      while( true)
-			;
-		    }
-		  ++dummy.data_l;
-		  ++dummy.id;
-		  CAN_send(dummy);
-#else
-		  delay( blink_slowly ? 300 : 100);
-#endif
+		  delay( 500);
 		  HAL_GPIO_WritePin( LED_PORT,LED_PIN, GPIO_PIN_SET);
-#if CAN_RUN_TESTCODE
-		  CAN_RX_queue.receive( dummy);
-		  ++dummy.data_l;
-		  ++dummy.id;
-		  CAN_send(dummy);
-#else
-		  delay( blink_slowly ? 300 : 100);
-#endif
+		  delay( 500);
 	  }
 }
 
