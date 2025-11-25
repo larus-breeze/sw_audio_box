@@ -31,8 +31,6 @@
 #include "bme68x.h"
 #include "CAN.h"
 
-#if ACTIVATE_OAT_SENSOR
-
 I2C_HandleTypeDef hi2c1;
 static uint8_t dev_addr;
 
@@ -148,6 +146,8 @@ private:
   type output;
 };
 
+#if ACTIVATE_OAT_SENSOR
+
 void StartSensingTask (void *argument)
 {
   struct bme68x_dev bme;
@@ -221,6 +221,8 @@ void StartSensingTask (void *argument)
 }
 
 Task BME_test (StartSensingTask, "BME680", 256);
+
+#endif
 
 /**
  * @brief I2C1 Initialization Function
@@ -327,5 +329,3 @@ I2C1_ER_IRQHandler (void)
 
   /* USER CODE END I2C1_ER_IRQn 1 */
 }
-
-#endif
